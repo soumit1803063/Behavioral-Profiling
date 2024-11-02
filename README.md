@@ -1,8 +1,10 @@
-## Dataset Column Descriptions
+## Project Overview
 
-The dataset is composed of **weekly activity metrics** split between **weekday (wk)** and **weekend (wn)** usage patterns, alongside **demographic information**. Here is a detailed breakdown of each column:
+This project aims to predict and analyze behavioral traits using weekly activity patterns and demographic information. The dataset combines **weekday and weekend activity data** with **demographic characteristics** to explore relationships between daily routines and personality traits. The project involves data preprocessing, exploratory data analysis, feature engineering, and predictive modeling to deliver insights into lifestyle patterns and behaviors.
 
-### Activity Features (Continuous)
+## Dataset Columns
+
+### Activity Metrics (Continuous)
 
 These columns represent time spent on specific activities on weekdays and weekends, measured in hours:
 
@@ -15,13 +17,14 @@ These columns represent time spent on specific activities on weekdays and weeken
 - **T_wk**: Television/Tablet time during weekdays, capturing entertainment or relaxation time after daily routines.
 - **T_wn**: Television/Tablet time during weekends, highlighting leisure time usage of visual media.
 
-### Demographic Features (Categorical)
 
-These categorical columns represent demographic attributes, which may influence activity patterns and target behaviors:
+### Demographic Attributes (Categorical)
 
-- **Gender**: Binary category, where 0 represents male and 1 represents female, used to examine activity and behavior trends across genders.
-- **Minority**: Binary category indicating minority status (1 for minority, 0 otherwise), which could help reveal patterns specific to minority groups.
-- **Deprived**: Binary category indicating if a person is from a deprived socioeconomic background (1 for deprived, 0 otherwise), which might impact activity levels and access to resources.
+Demographic features may influence or relate to activity and behavioral trends:
+
+- **Gender**: 0 for male, 1 for female.
+- **Minority**: Minority status (1 for minority, 0 otherwise).
+- **Deprived**: Socioeconomic deprivation status (1 for deprived, 0 otherwise).
 
 ### Target Variables (Categorical, Ordinal Scale)
 
@@ -42,20 +45,30 @@ These variables, scored from 1 to 5, represent different behavioral or emotional
 - **Intthg**: Interest in thoughtful behavior, with higher scores suggesting a more reflective nature.
 - **Cheer**: Cheerfulness, where higher values reflect a generally positive demeanor.
 
-## Project Work Overview
+These traits offer insights into individuals' personalities and mindsets, potentially linked to their activity patterns.
 
-This project focuses on **analyzing** and **predicting** behavioral traits based on activity patterns and demographic data. The tasks involved include:
+## Project Workflow
 
-1. **Data Preprocessing**: Cleaning the dataset, handling any missing values, encoding categorical variables, and normalizing or scaling continuous features for consistency across models.
+1. **Data Splitting**:
+   - The dataset is split into **training** and **testing sets** using an 80-20 split. The feature set `X_pca` and target variables `y` are split with `train_test_split`.
 
-2. **Exploratory Data Analysis (EDA)**: Conducting statistical analysis and visualization to uncover correlations and patterns between activity metrics, demographics, and behavioral traits.
+2. **Model Training and Hyperparameter Tuning**:
+   - Three regression models are applied: **Linear Regression**, **Ridge Regression**, and **Lasso Regression**.
+   - **Linear Regression** is trained directly without hyperparameter tuning.
+   - **Ridge Regression** and **Lasso Regression** models undergo hyperparameter tuning using `GridSearchCV`, with `alpha` values ([0.01, 0.1, 1, 10, 100]) and **cross-validation** (5-fold) to optimize for `neg_mean_squared_error`.
 
-3. **Feature Engineering**: Creating new features, if necessary, to improve model performance, such as aggregating weekday and weekend activity levels or generating interaction terms between demographics and activities.
+3. **Prediction**:
+   - Each model predicts the target variables on the test set. Predictions are generated separately for Linear, Ridge, and Lasso models.
 
-4. **Model Training and Evaluation**:
-   - **Classification Models**: Developing and tuning several classification algorithms, such as logistic regression, SVM, decision trees, and random forests, to predict each behavioral trait.
-   - **Evaluation Metrics**: Using metrics such as accuracy, precision, recall, and F1-score to evaluate model performance, with special attention to the interpretability of each model in understanding behavioral trends.
+4. **Evaluation Metrics**:
+   - Models are evaluated using three metrics:
+     - **Mean Squared Error (MSE)**: Measures the average squared differences between predicted and actual values.
+     - **Mean Absolute Error (MAE)**: Measures the average magnitude of errors in predictions.
+     - **R2 Score (R2)**: Indicates the proportion of variance in the target variables explained by the model.
 
-5. **Insights and Reporting**: Documenting the findings, including key correlations, model performance insights, and any notable patterns observed in the relationship between activity, demographics, and behavioral traits. The final report aims to provide actionable insights into lifestyle patterns and personality traits based on the dataset.
+   Results are printed for each model, offering comparative insights into performance.
 
-By combining activity and demographic data, this project sheds light on how daily routines and background factors contribute to individual behavioral characteristics, potentially helping guide targeted interventions or recommendations for lifestyle improvements.
+5. **Visualization**:
+   - Scatter plots visualize predictions against actual values for each model (Linear, Ridge, Lasso) and each target variable, helping assess model accuracy visually.
+
+This workflow provides insights into how activity and demographic features predict behavioral traits, exploring model effectiveness and feature influence.
